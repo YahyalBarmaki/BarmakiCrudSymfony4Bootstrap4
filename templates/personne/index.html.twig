@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personne index{% endblock %}
+
+{% block body %}
+    <h1>Liste des stagiares</h1>
+    <div class="jumbotron">
+        <div class="container">
+            {{form_start(form)}}
+            <div class="form-row">
+                <div class="col">
+                        {{form_row(form.nom)}}
+                </div>
+                <div class="col">
+                        {{form_row(form.prenom)}}
+                </div>
+                <br>
+                <div class="col">
+                    <button class="btn btn-primary">Rechercher</button>
+                </div>
+            </div>   
+            {{form_end(form)}}
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for personne in personnes %}
+            <tr>
+                <td>{{ personne.id }}</td>
+                <td>{{ personne.nom }}</td>
+                <td>{{ personne.prenom }}</td>
+                <td>
+                    <a href="{{ path('personne_show', {'id': personne.id}) }}" class="btn btn-light">show</a>
+                    <a href="{{ path('personne_edit', {'id': personne.id}) }}" class="btn btn-info">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found yet</td>
+            </tr>
+        {% endfor %}
+       
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(personnes) }}  
+         
+    </div>
+    <a href="{{ path('personne_new') }}" class="btn btn-primary">Nouveau stagiaire</a>
+{% endblock %}
